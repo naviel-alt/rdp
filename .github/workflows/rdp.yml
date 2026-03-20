@@ -1,4 +1,4 @@
-name: RDP
+name: NightMareCore
 on:
   workflow_dispatch:
 jobs:
@@ -16,7 +16,7 @@ jobs:
               exit 1
           }
 
-      - name: Core RDP Settings
+      - name: Core NightMareCore Settings
         run: |
           $folderPath = "D:\link subscribe youtube channel"
           if (-Not (Test-Path -Path $folderPath)) {
@@ -26,7 +26,7 @@ jobs:
               Write-Host "Folder 'link subscribe youtube channel' already exists in D drive."
           }
 
-      - name: Configure Core RDP Settings
+      - name: Configure Core NightMareCore Settings
         run: |
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0 -Force
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -Name "UserAuthentication" -Value 0 -Force
@@ -35,7 +35,7 @@ jobs:
           netsh advfirewall firewall add rule name="RDP-Tailscale" dir=in action=allow protocol=TCP localport=3389
           Restart-Service -Name TermService -Force
 
-      - name: Create RDP User with Static Password
+      - name: Create NightMareCore User with Static Password
         run: |
           $password = "admin@123"
           $securePass = ConvertTo-SecureString $password -AsPlainText -Force
@@ -75,7 +75,7 @@ jobs:
           }
           echo "TAILSCALE_IP=$tsIP" >> $env:GITHUB_ENV
 
-      - name: Verify RDP Accessibility
+      - name: Verify NightMareCore Accessibility
         run: |
           Write-Host "Tailscale IP: $env:TAILSCALE_IP"
           $testResult = Test-NetConnection -ComputerName $env:TAILSCALE_IP -Port 3389
